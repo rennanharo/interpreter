@@ -43,3 +43,10 @@ Few projects offer the opportunity to explore the key logical components of a co
 8. **Runtime**
    - After transforming the user's program into an executable form, the final step is running it. If it's compiled to machine code, the operating system loads the executable. If it's compiled to bytecode, the VM loads and runs it.
    - Most languages require runtime services, such as garbage collection for memory management or type tracking for "instance of" tests. These services make up the runtime. In fully compiled languages, like Go, the runtime is embedded in each executable. For languages run in a VM or interpreter, like Java, Python, and JavaScript, the runtime resides within the VM.
+
+### Compilers vs Interpreters
+Here, the fruit vs vegetable analogy is perfect. Some fruits are vegetables, and vice-versa. The key difference is that fruit is a _botanical_ term, while vegetable is a _culinary_ term.
+
+- In terms of programming languages, **compiling** is an _implementation technique_ that involves translating a source language into some other - usually lower-level - form. When you generate **bytecode** or **machine code** you are compiling. When you transpile to another high-level language, you are compiling too.
+- When we say a language implementation "is a compiler", we mean it **translates source code to some other form but does not execute it**. The user has to take the resulting output and run it themselves
+- Conversely, when we say an implementation "is an interpreter", we mean it **takes in source code and executes it immediately. It runs programs "from source"**.
