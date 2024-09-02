@@ -3,7 +3,7 @@
 > This repo follows the implementation in the book https://craftinginterpreters.com, by Robert Nystrom.
 
 ## Why bother doing this at all?
-Few projects give you the opportunity to touch on most logical parts of a computer. By logical parts I mean parts that are not really related to hardware so much, but rather parts that will directly affect how code gets executed -- almost like a vertical view of the computer stack: start from a simple `print("Hello World!")`, to tokens, to AST, to semantics to bytecode to `48 C7 C7 01 00 00 00 48 C7 C0 01 00 00 00 48 89 E6 B8 01 00 00 00 0F 05`.
+Few projects offer the opportunity to explore the key logical components of a computer system. By "logical components," I mean elements that aren't directly tied to hardware but significantly influence how code is executed—essentially a vertical view of the computer stack. Starting from something as simple as `print("Hello World!")`, you can trace the journey through interpretation and compilation, ultimately reaching the machine code: `48 C7 C7 01 00 00 00 48 C7 C0 01 00 00 00 48 89 E6 B8 01 00 00 00 0F 05`.
 
 ## Introduction
 ### Parts of a language
@@ -34,4 +34,12 @@ Few projects give you the opportunity to touch on most logical parts of a comput
    - `pennyArea = 3.14159 * (0.75 / 2) * (0.75 / 2);`, we could do all of that arithmetic in the compiler and change the code to: `pennyArea = 0.4417860938;`
    > This wraps up the **middle end** of the implementation.
 6. **Code generation**
-   - 
+   - Getting to the backend of the language. Here we must think about the tradeoffs of our language - which computer architecture to target and so on.
+   - To get around that "lock-in" with computer architectures, a common practice is to generate code for **virtual machines**. It is generally called bytecode, because each instruction is ofted a single byte long.
+7. **Virtual machine**
+   - After compiling to bytecode, your work isn't finished because no chip directly understands bytecode. You have two options: 
+     1. Write a mini-compiler for each target architecture to convert the bytecode to native code. This simplifies the last stage and allows reuse of most of the compiler pipeline across different architectures.
+     2. Write a virtual machine (VM) that emulates a hypothetical chip supporting your virtual architecture. Although running bytecode in a VM is slower due to runtime simulation, it offers simplicity and portability since the VM can run on any platform with a C compiler.
+8. **Runtime**
+   - After transforming the user's program into an executable form, the final step is running it. If it's compiled to machine code, the operating system loads the executable. If it's compiled to bytecode, the VM loads and runs it.
+   - Most languages require runtime services, such as garbage collection for memory management or type tracking for "instance of" tests. These services make up the runtime. In fully compiled languages, like Go, the runtime is embedded in each executable. For languages run in a VM or interpreter, like Java, Python, and JavaScript, the runtime resides within the VM.
